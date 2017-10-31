@@ -12,10 +12,10 @@
 /***** IMPORTS *****/
 /*******************/
 
-const TwitterStrategy = require('passport-twitter').Strategy;
-const passport = require('passport');
-const mongodb = require('mongodb').MongoClient;
-const shortid = require('shortid');
+const TwitterStrategy = require('passport-twitter').Strategy
+const passport = require('passport')
+const mongodb = require('mongodb')
+const shortid = require('shortid')
 
 const dbInfo = require('../db/db')
 
@@ -29,6 +29,7 @@ require('dotenv').config()
 /********************/
 
 const MongoClient = mongodb.MongoClient
+const dbUrl = process.env.MONGODB_URI || "mongodb://localhost:27017/voting-app"
 
 /************************************************************/
 /************************************************************/
@@ -45,7 +46,7 @@ passport.use(new TwitterStrategy({
   function(token, tokenSecret, profile, done) {
 
     process.nextTick(function(){
-      MongoClient.connect(dbInfo.url, (err, db) => {
+      MongoClient.connect(dbUrl, (err, db) => {
 
         const User = db.collection('users')
         User.findOne({
@@ -57,7 +58,7 @@ passport.use(new TwitterStrategy({
             if (!user) {
 
               const newUser = {
-                id: shortid.generate(),
+                _id: shortid.generate(),
                 token: token,
                 displayName: profile.displayName
               }
@@ -77,3 +78,34 @@ passport.use(new TwitterStrategy({
 
   }
 ))
+
+/************************************************************/
+/************************************************************/
+
+/*********************/
+/***** SERIALIZE *****/
+/*********************/
+
+passport.serializeUser((user, done) => {
+	done(null, user._id)
+});
+
+/************************************************************/
+/************************************************************/
+
+/***********************/
+/***** DESERIALIZE *****/
+/***********************/
+
+passport.deserializeUser((obj, done) => {
+	done(null, obj)
+});
+
+/************************************************************/
+/************************************************************/
+
+/*******************/
+/***** EXPORTS *****/
+/*******************/
+
+module.exports = passport;

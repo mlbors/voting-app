@@ -1,6 +1,6 @@
 /**
  * freeCodeCamp - Back End Development Certification - Dynamic Web Application Projects
- * Routes - Users
+ * Routes - Logout
  * 
  * @author MLBORS
  * @version 1.0.0.0
@@ -12,19 +12,25 @@
 /***** IMPORTS *****/
 /*******************/
 
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const passport = require('passport')
+const router = express.Router()
 
 /************************************************************/
 /************************************************************/
 
-/****************/
-/***** LIST *****/
-/****************/
+/******************/
+/***** ROUTES *****/
+/******************/
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+/*****/
+/***** LOGIN *****/
+/*****/
+
+router.get('/', (req, res) => {
+	req.logout();
+	res.redirect('/')
+})
 
 /************************************************************/
 /************************************************************/
@@ -33,4 +39,4 @@ router.get('/', function(req, res, next) {
 /***** EXPORTS *****/
 /*******************/
 
-module.exports = router;
+module.exports = router

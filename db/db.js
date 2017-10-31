@@ -13,5 +13,5 @@
 /*******************/
 
 module.exports.info = {
-  url: process.env.MONGODB_URI || 'mongodb://localhost:27017/voting-app'
+  url: process.env.MONGODB_URI || "mongodb://localhost:27017/voting-app"
 }
