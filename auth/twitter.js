@@ -29,7 +29,7 @@ require('dotenv').config()
 /********************/
 
 const MongoClient = mongodb.MongoClient
-const dbUrl = process.env.MONGODB_URI || "mongodb://localhost:27017/voting-app"
+const dbUrl = dbInfo.info.url
 
 /************************************************************/
 /************************************************************/
