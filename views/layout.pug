@@ -8,7 +8,10 @@ html
   body
 
     div(class='header')
-      a(class='login' href='/auth/twitter') Log In
-      a(class='logout' href='/logout') Log Out
+      if auth
+        a(class='logout' href='/logout') Log Out
+      else
+        a(class='login' href='/auth/twitter') Log In
+      a(class='polls' href='/polls') Polls
 
     block content

@@ -15,7 +15,7 @@
 const mongodb = require('mongodb')
 const shortid = require('shortid')
 
-const dbInfo = require('../db/db')
+const dbInfo = require('./db')
 
 /************************************************************/
 /************************************************************/
@@ -39,7 +39,7 @@ const dbUrl = dbInfo.info.url
  * @return Array
  */
 
-module.findAll = (callback) => {
+exports.findAll = (callback) => {
 
     MongoClient.connect(dbUrl, (err, db) => {
     
@@ -91,6 +91,11 @@ exports.addOne = (item, callback) => {
 /***** FIND BY ID *****/
 /**********************/
 
+/*
+ * @var String id poll's id
+ * @var Function callback a callback function
+ */
+
 exports.findById = (id, callback) => {
 
   MongoClient.connect(dbURL, (err, db) => {
@@ -113,6 +118,13 @@ exports.findById = (id, callback) => {
 /****************/
 /***** VOTE *****/
 /****************/
+
+/*
+ * @var String id poll's id
+ * @var String selected answer
+ * @var String user user's id
+ * @var Function callback a callback function
+ */
 
 exports.vote = (id, selected, user, callback) => {
 
@@ -140,13 +152,16 @@ exports.vote = (id, selected, user, callback) => {
 						$push: { 
               "voted": user
             }
-					}
+          },
+          (err, res) => {
+            db.close()
+            return callback(err, res)
+          }
 				)
+      } else {
+        db.close()
+        return callback('Already voted', true)
       }
-
-      return callback(null, true)
-      
-      db.close()
 
     })
 
@@ -154,4 +169,82 @@ exports.vote = (id, selected, user, callback) => {
 
 }
 
+/************************************************************/
+/************************************************************/
 
+/**********************/
+/***** ADD ANWSER *****/
+/**********************/
+
+/*
+ * @var String id poll's id
+ * @var String answer answer to add
+ * @var Function callback a callback function
+ */
+
+exports.addAnswer = (id, answer, callback) => {
+
+  MongoClient.connect(dbURL, (err, db) => {
+    
+    if (err) return callback(err)
+
+    const polls = db.collection('polls')
+		polls.update(
+			{
+        "_id": id
+      },
+			{
+				$push: {
+          "answers": { 
+            answer: answer, 
+            "votes": 0
+          }
+        }
+      },
+      (err, res) => {
+        db.close()
+        return callback(err, res)
+      }
+    )
+  })
+
+}
+
+/************************************************************/
+/************************************************************/
+
+/********************/
+/***** NEW POLL *****/
+/********************/
+
+/*
+ * @var String id poll's id
+ * @var String user user's id
+ * @var String question
+ * @var Array answers
+ * @var Function callback a callback function
+ */
+
+exports.newPoll = (user, question, answers, callback) => {
+
+  MongoClient.connect(dbURL, (err, db) => {
+
+    if (err) return callback(err)
+
+    const polls = db.collection('polls')
+
+    polls.insertOne(
+      {
+        _id: shortid.generate(), 
+        author: user, 
+        question: question, 
+        answers: answers, 
+        voted: []
+      },
+      (err, res) => {
+        db.close()
+        return callback(err, res)
+      }
+    )
+  })
+}

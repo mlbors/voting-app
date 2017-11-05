@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+
+  if (polls.length)
+    h2 Open polls
+    ul
+      each poll in polls
+        li= poll
+  else
+    p No polls
+
+  if auth
+    a(href='/polls/add') Add poll
+  else
+    p Please log in to create a new poll
+

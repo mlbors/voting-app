@@ -12,11 +12,12 @@
 /***** IMPORTS *****/
 /*******************/
 
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
-const auth = require('./auth');
-const logout = require('./logout');
+const auth = require('./auth')
+const logout = require('./logout')
+const polls = require('./polls')
 
 /************************************************************/
 /************************************************************/
@@ -25,8 +26,10 @@ const logout = require('./logout');
 /***** HOME *****/
 /****************/
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', (req, res, next) => {
+  res.render('index', {
+    auth: req.isAuthenticated()
+  })
 });
 
 /************************************************************/
@@ -50,8 +53,17 @@ router.use('/logout', logout)
 /************************************************************/
 /************************************************************/
 
+/****************/
+/***** AUTH *****/
+/****************/
+
+router.use('/polls', polls)
+
+/************************************************************/
+/************************************************************/
+
 /*******************/
 /***** EXPORTS *****/
 /*******************/
 
-module.exports = router;
+module.exports = router
