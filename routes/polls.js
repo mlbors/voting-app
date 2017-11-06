@@ -17,6 +17,7 @@ const passport = require('passport')
 const router = express.Router()
 
 const dbPolls = require('../db/polls')
+const answersService = require('../services/answers')
 
 /************************************************************/
 /************************************************************/
@@ -57,6 +58,36 @@ router.get('/add', (req, res) => {
 	res.render('create-poll', {
     title: 'Create poll',
     auth: req.isAuthenticated()
+  })
+})
+
+/************************************************************/
+/************************************************************/
+
+/*****/
+/***** CREATE *****/
+/*****/
+
+router.post('/create', (req, res) => {
+  const parsedAnswers = answersService.parseAnswers(req.body.answers)
+  dbPolls.newPoll(req.user, req.body.question, parsedAnswers, (err, data) => {
+    res.redirect('/polls');
+  })
+})
+
+/************************************************************/
+/************************************************************/
+
+/*****/
+/***** DETAILS *****/
+/*****/
+
+router.get('/detail/:id', (req, res) => {
+  dbPolls.findById(req.params.id, (err, data) => {
+    res.render('poll-detail', {
+      poll: data,
+      auth: req.isAuthenticated()
+    })
   })
 })
 

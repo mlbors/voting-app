@@ -1,18 +1,32 @@
 extends layout
 
 block content
-  h1= title
+
+  div.row
+    div.col-md-12
+      h1= title
 
   if (polls.length)
-    h2 Open polls
-    ul
-      each poll in polls
-        li= poll
-  else
-    p No polls
 
-  if auth
-    a(href='/polls/add') Add poll
+    div.row
+      div.col-md-12
+      h2 Open polls
+
+    div.row
+      div.col-md-12
+        ul
+          each poll in polls
+            li
+              a(href='/polls/detail/' + poll._id) #{poll.question}
   else
-    p Please log in to create a new poll
+    div.row
+      div.col-md-12
+        p No polls
+
+  div.row
+    div.col-md-12
+      if auth
+        a(href='/polls/add') Add poll
+      else
+        p Please log in to create a new poll
 

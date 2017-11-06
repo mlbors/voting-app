@@ -1,0 +1,35 @@
+extends layout
+
+block content
+
+  div.row
+    div.col-md-12
+      h1= poll.question
+
+  div.row
+    div.col-md-12
+      if (poll.answers)
+
+        if auth
+          form(method='POST' action='/polls/vote')
+            ul
+              each answer in poll.answers 
+                li
+                  div.radio
+                    input(type='radio' id=answer.answer name=answer.answer value=answer.answer )
+                    | #{answer.answer}
+            button.btn.btn-primary(type='submit') Vote
+
+        else
+          ul
+            each answer in poll.answers 
+              li= answer.answer
+      else
+        p No answers
+
+  div.row
+    div.col-md-12
+      if auth
+        a(href='/polls/add-answer/' + poll._id) Add answer
+      else
+        p Please log in to vote or to add an answer

@@ -71,7 +71,7 @@ exports.findAll = (callback) => {
 
 exports.addOne = (item, callback) => {
 
-  MongoClient.connect(dbURL, (err, db) => {
+  MongoClient.connect(dbUrl, (err, db) => {
     
     if (err) return callback(err)
     
@@ -98,7 +98,7 @@ exports.addOne = (item, callback) => {
 
 exports.findById = (id, callback) => {
 
-  MongoClient.connect(dbURL, (err, db) => {
+  MongoClient.connect(dbUrl, (err, db) => {
 
     if (err) return callback(err)
     
@@ -128,7 +128,7 @@ exports.findById = (id, callback) => {
 
 exports.vote = (id, selected, user, callback) => {
 
-  MongoClient.connect(dbURL, (err, db) => {
+  MongoClient.connect(dbUrl, (err, db) => {
     
     if (err) return callback(err)
     
@@ -184,7 +184,7 @@ exports.vote = (id, selected, user, callback) => {
 
 exports.addAnswer = (id, answer, callback) => {
 
-  MongoClient.connect(dbURL, (err, db) => {
+  MongoClient.connect(dbUrl, (err, db) => {
     
     if (err) return callback(err)
 
@@ -227,7 +227,7 @@ exports.addAnswer = (id, answer, callback) => {
 
 exports.newPoll = (user, question, answers, callback) => {
 
-  MongoClient.connect(dbURL, (err, db) => {
+  MongoClient.connect(dbUrl, (err, db) => {
 
     if (err) return callback(err)
 
@@ -237,6 +237,7 @@ exports.newPoll = (user, question, answers, callback) => {
       {
         _id: shortid.generate(), 
         author: user, 
+        date: new Date(),
         question: question, 
         answers: answers, 
         voted: []
