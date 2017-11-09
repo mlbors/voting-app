@@ -1,0 +1,32 @@
+extends layout
+
+block content
+
+  if error
+    div.row
+      div.col-md-12
+        div.alert.danger
+          p= error
+
+  if message
+    div.row
+      div.col-md-12
+        div.alert.success
+          p= message
+
+  div.row
+    div.col-md-12
+      h1= poll.title
+
+  div.row
+    div.col-md-12
+      form(method='POST' action='/polls/submit-answer/')
+        div.form-group
+          label(for='answer') Answer to add
+          input.form-control(type='text' id='answer' name='answer' placeholder='Answer')
+          input(type='hidden' id='id' name='id' value=poll._id)
+        button.btn.btn-primary(type='submit') Add answer
+
+  div.row
+    div.col-md-12
+      a(class='btn btn-default' href='/polls/detail/' + poll._id) Back

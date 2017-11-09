@@ -2,22 +2,40 @@ extends layout
 
 block content
 
+  if error
+    div.row
+      div.col-md-12
+        div.alert.danger
+          p= error
+
+  if message
+    div.row
+      div.col-md-12
+        div.alert.success
+          p= message
+
   div.row
     div.col-md-12
       h1= poll.question
+
+  if votedByUser !== -1
+    div.row
+      div.col-md-12
+        p You have already voted.
 
   div.row
     div.col-md-12
       if (poll.answers)
 
-        if auth
+        if auth && votedByUser === -1
           form(method='POST' action='/polls/vote')
             ul
               each answer in poll.answers 
                 li
                   div.radio
-                    input(type='radio' id=answer.answer name=answer.answer value=answer.answer )
+                    input(type='radio' id=answer.answer name='answer' value=answer.answer )
                     | #{answer.answer}
+            input(type='hidden' id='id' name='id' value=poll._id)
             button.btn.btn-primary(type='submit') Vote
 
         else
@@ -29,7 +47,15 @@ block content
 
   div.row
     div.col-md-12
+      canvas(id='chart' width='400' height='400' data-poll=poll._id)
+
+  div.row
+    div.col-md-12
       if auth
-        a(href='/polls/add-answer/' + poll._id) Add answer
+        a(class='btn btn-default' href='/polls/add-answer/' + poll._id) Add answer
       else
         p Please log in to vote or to add an answer
+
+    div.row
+      div.col-md-12
+        a(class='btn btn-default' href='/polls') Back

@@ -2,6 +2,18 @@ extends layout
 
 block content
 
+  if error
+      div.row
+        div.col-md-12
+          div.alert.danger
+            p= error
+
+  if message
+    div.row
+      div.col-md-12
+        div.alert.success
+          p= message
+
   div.row
     div.col-md-12
       h1= title
@@ -13,7 +25,10 @@ block content
           label(for='question') Question
           input.form-control(type='text' id='question' name='question' placeholder='Question')
         div.form-group
-          label(for='answers') Answers
+          label(for='answers') Answers (one per line)
           textarea.form-control(id='answers' name='answers' placeholder='Answers')
         button.btn.btn-primary(type='submit') Create poll
 
+  div.row
+    div.col-md-12
+      a(class='btn btn-default' href='/polls') Back

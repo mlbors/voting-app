@@ -7,12 +7,33 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1")
   body
 
-    div(class='header')
-      if auth
-        a(class='logout' href='/logout') Log Out
-      else
-        a(class='login' href='/auth/twitter') Log In
-      a(class='polls' href='/polls') Polls
-    
+    div.header
+
+      nav.navbar.navbar-default
+        div.container
+          div.navbar-header
+            button(type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar-collapse' aria-expanded='false')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a(class='navbar-brand' href='/') Voting App
+
+          div(class='collapse navbar-collapse' id='navbar-collapse')
+            ul.nav.navbar-nav
+              li
+                a(class='polls' href='/polls') Polls
+              li
+                if auth
+                  a(class='logout' href='/logout') Log Out
+                else
+                  a(class='login' href='/auth/twitter') Log In
+
     div.container
       block content
+
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js')
+    script(src='/js/front-charts.js')
+    script(src='/js/main.js')

@@ -2,6 +2,18 @@ extends layout
 
 block content
 
+  if error
+    div.row
+      div.col-md-12
+        div.alert.danger
+          p= error
+
+  if message
+    div.row
+      div.col-md-12
+        div.alert.success
+          p= message
+
   div.row
     div.col-md-12
       h1= title
@@ -26,7 +38,7 @@ block content
   div.row
     div.col-md-12
       if auth
-        a(href='/polls/add') Add poll
+        a(class='btn btn-primary' href='/polls/add') Add poll
       else
         p Please log in to create a new poll
 
