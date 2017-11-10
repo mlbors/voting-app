@@ -29,11 +29,18 @@ html
                 else
                   a(class='login' href='/auth/twitter') Log In
 
-    div.container
+    div(id='main' class='container')
       block content
+
+    div(id='footer' class='footer')
+      div.container
+        div.row
+          div.col-md-12
+            p 
+              small Voting App
 
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js')
     script(src='/js/front-charts.js')
     script(src='/js/main.js')

@@ -1,8 +1,55 @@
+/**
+ * freeCodeCamp - Back End Development Certification - Dynamic Web Application Projects
+ * Style
+ * 
+ * @author MLBORS
+ * @version 1.0.0.0
+ * @since 2017.10.30
+ * @for freeCodeCamp
+ */
+
+/*****************/
+/***** STYLE *****/
+/*****************/
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+#main .row {
+  margin-bottom: 30px;
+}
+
+#main .row:last-of-type {
+  margin-bottom: 0;
+}
+
+#main ul {
+  padding: 0;
+  list-style-position: inside;
+}
+
+#main ul li {
+  margin-bottom: 6px;
+}
+
+#main ul li:last-of-type {
+  margin-bottom: 0;
+}
+
+
+#main form ul {
+  padding-left: 15px;
+  list-style-type: none;
+}
+
+#main #chart {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+#footer {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
 }

@@ -43,19 +43,23 @@ block content
             each answer in poll.answers 
               li= answer.answer
       else
-        p No answers
+        p No answers.
 
   div.row
     div.col-md-12
-      canvas(id='chart' width='400' height='400' data-poll=poll._id)
+      h2 Chart
+
+  div.row
+    div.col-md-12
+      canvas(id='chart' width='250' height='250' data-poll=poll._id)
 
   div.row
     div.col-md-12
       if auth
         a(class='btn btn-default' href='/polls/add-answer/' + poll._id) Add answer
       else
-        p Please log in to vote or to add an answer
+        p Please log in to vote or to add an answer.
 
-    div.row
-      div.col-md-12
-        a(class='btn btn-default' href='/polls') Back
+  div.row
+    div.col-md-12
+      a(class='btn btn-default' href='/polls') Back

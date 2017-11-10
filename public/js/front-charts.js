@@ -38,12 +38,31 @@ const FrontChartsHandler = () => {
       cache: false,
       dataType: 'json',
       succes: (result) => {
-        return {error: null, data: result};
+        return {error: null, data: result}
       },
       error: (err) => {
-        return {error: err};
+        return {error: err}
       }
     })
+  }
+
+  /************************************************************/
+  /************************************************************/
+
+  /**********/
+  /********** GENERATE COLORS **********/
+  /**********/
+
+  _generateColors = (size) => {
+    let colors = []
+    for (let i= 0; i < size; i++) {
+      let r = Math.floor(Math.random() * 200)
+      let g = Math.floor(Math.random() * 200)
+      let b = Math.floor(Math.random() * 200)
+      let color = 'rgba(' + r + ', ' + g + ', ' + b + ', 0.75)'
+      colors.push(color)
+    }
+    return colors
   }
 
   /************************************************************/
@@ -54,11 +73,18 @@ const FrontChartsHandler = () => {
   /**********/
 
   _displayChart = (data) => {
-    const ctx = document.getElementById("chart").getContext("2d");
-    const chart = new Chart(ctx, {
-      type: "pie",
+    
+    const colors = _generateColors(data.labels.length)
+    data.datasets[0].backgroundColor = colors
+    data.datasets[0].borderColor = colors
+    data.datasets[0].borderWidth = 1
+
+    const ctx = $('#chart')
+    const pieChart = new Chart(ctx, {
+      type: "doughnut",
       data: data
     })
+
   }
 
   /************************************************************/
@@ -83,10 +109,9 @@ const FrontChartsHandler = () => {
 
     generateChart: () => {
       _getData().then((data) => {
-        console.log(data)
-        _displayChart(data)
+        _displayChart(data.chartData)
       }).catch((err) => {
-        console.warn('Error during chart generation..')
+        console.warn('Error during chart generation...')
         console.error(err)
       })
     }
